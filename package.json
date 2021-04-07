@@ -1,0 +1,28 @@
+{
+  "name": "desi-app",
+  "version": "1.0.0",
+  "description": "Desi App Backend",
+  "main": "server.js",
+  "dependencies": {
+    "authy": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-list-endpoints": "^5.0.0",
+    "express-validator": "^5.3.1",
+    "hashmap": "^2.4.0",
+    "http": "^0.0.1-security",
+    "mongoose": "^5.12.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "twilio": "^3.59.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Maryam Zafar",
+  "license": "ISC"
+}
