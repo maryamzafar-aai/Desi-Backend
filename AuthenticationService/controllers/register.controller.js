@@ -19,18 +19,15 @@ async function sendOTPSMS(req,res){
 async function validateOTP(req,res){
     const userNumber = req.body.userNumber;
     const storedOTP = await registerService.findStoredOTP(userNumber);
-    console.log(storedOTP);
-    console.log(getDateTimeNow());
-    console.log(storedOTP.expiryDateTime);
-    console.log(storedOTP.userOTP==req.body.userOTP);
-    console.log(storedOTP.expiryDateTime > getDateTimeNow());
+
     if(storedOTP.userOTP==req.body.userOTP && storedOTP.expiryDateTime > getDateTimeNow()){
-        console.log("otp valid");
+        
         //mark otp end date
         await registerService.markOTPEndDate(userNumber);
+        
         //check if user exists
         const existingUser = await registerService.checkUserExists(userNumber);
-        //console.log(existingUser);
+        
         if(!existingUser){
             //register user
             const registeredUser = await registerService.registerUser(req.body);
