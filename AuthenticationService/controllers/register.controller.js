@@ -5,22 +5,23 @@ const {sendTwilioSMS,getDateTimeNow} = require('../helpers/register.helpers');
 /* const authHelper = require('../helpers/auth.helper');
  const bcrypt = require('bcryptjs');
 */
-async function sendOTPSMS(req,res){
+async function sendOTPSMS(number){
     const OTP = Math.floor(100000 + Math.random() * 900000); //a random 6 digit number
-    sendTwilioSMS(OTP, req.body);
+
     try{
-    await registerService.updateOrInsertOTPRecord(req.body, OTP);
+        sendTwilioSMS(OTP, number);
+    await registerService.updateOrInsertOTPRecord(number, OTP);
     } catch(e){  
         console.log(e);
     }
-    res.json(req.body);
+    return number;
 }
 
-async function validateOTP(req,res){
-    const userNumber = req.body.userNumber;
+async function validateOTP(user){
+    const userNumber = user.userNumber;
     const storedOTP = await registerService.findStoredOTP(userNumber);
-
-    if(storedOTP.userOTP==req.body.userOTP && storedOTP.expiryDateTime > getDateTimeNow()){
+if(storedOTP){
+    if(storedOTP.userOTP==user.userOTP && storedOTP.expiryDateTime > getDateTimeNow()){
         
         //mark otp end date
         await registerService.markOTPEndDate(userNumber);
@@ -30,23 +31,30 @@ async function validateOTP(req,res){
         
         if(!existingUser){
             //register user
-            const registeredUser = await registerService.registerUser(req.body);
+            console.log('register');
+            const registeredUser = await registerService.registerUser(user);
             console.log(registeredUser);
-            res.json(registeredUser);
+            return{
+                ...registeredUser._doc, _id: registeredUser._doc._id.toString()
+            };
         }
         else{
             //login
             const loggenInUser = await registerService.loginUser(userNumber);
             console.log(loggenInUser);
-            res.json(loggenInUser);
+            return{
+                ...loggenInUser._doc, _id: loggenInUser._doc._id.toString()
+            };
         }
     }
     else{
-        res.json({
-
-        })
+        return {}
 
     }
+}
+else{
+    return {}
+}
 
 }
 

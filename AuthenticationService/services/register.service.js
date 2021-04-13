@@ -6,9 +6,9 @@ const {ResponseBase} = require('../DTO/Response/ResponseBase');
 const {getOTPExpiryDate,getDateTimeNow} = require('../helpers/register.helpers');
 
 
-async function updateOrInsertOTPRecord(body, OTP) {
+async function updateOrInsertOTPRecord(number, OTP) {
     await UserOTP.updateOne(
-        { userNumber: body.userNumber },
+        { userNumber: number },
         { $set: { userOTP: OTP, expiryDateTime: getOTPExpiryDate(), endDate: null } },
         { upsert: true })
         .catch(err => console.log(err));
@@ -35,6 +35,7 @@ async function markOTPEndDate(number) {
 }
 
 async function findStoredOTP(number) {
+    console.log(number);
     return await UserOTP.findOne({ userNumber: number });
 }
 

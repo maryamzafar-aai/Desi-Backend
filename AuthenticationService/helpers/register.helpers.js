@@ -15,7 +15,7 @@ function getDateTimeNow() {
     return dt;
 }
 
-function sendTwilioSMS(OTP, user) {
+function sendTwilioSMS(OTP, number) {
     const accountSid = 'ACe7e1557fd07bc3cb50316da2809a9d0e';
     const authToken = 'fbda390d913f6e91f62944eaca5e7e93';
     const client = require('twilio')(accountSid, authToken);
@@ -24,7 +24,7 @@ function sendTwilioSMS(OTP, user) {
         .create({
             body: `Your OTP for Desi App is ${OTP}`,
             messagingServiceSid: 'MGa9081cedff5b1146aa53059ac6396e3d',
-            to: user.userNumber
+            to: number
         })
         .then(message => console.log(message.sid))
         .catch(err => console.log(err.message))
