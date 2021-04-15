@@ -1,7 +1,8 @@
-let ResponseBase  = class {
-    constructor(IsSuccessful,Message){
-        this.IsSuccessful = IsSuccessful,
-        this.Message = Message
+const { buildSchema } = require('graphql');
+module.exports = buildSchema(`
+    interface BaseResponse {
+        status : Boolean
+        statuscode: Int
+        message: String
     }
-}
-module.exports = ResponseBase;
+`);

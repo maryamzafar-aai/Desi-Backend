@@ -13,6 +13,7 @@ const userOTPSchema = new mongoose.Schema({
     endDate: {
         type: Date
     }
-});
+},
+    { timestamps: true });
 let UserOTP = mongoose.model("UserOTP", userOTPSchema);
- module.exports = UserOTP;
+module.exports = UserOTP;

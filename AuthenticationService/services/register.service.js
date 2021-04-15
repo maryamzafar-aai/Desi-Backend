@@ -1,7 +1,5 @@
-const {mongoose} = require('../database/database'); //db connection
 const UserOTP = require('../../models/UserOTP'); //get model
 const User = require('../../models/User'); //get model
-const {ResponseBase} = require('../DTO/Response/ResponseBase');
 
 const {getOTPExpiryDate,getDateTimeNow} = require('../helpers/register.helpers');
 
@@ -14,7 +12,7 @@ async function updateOrInsertOTPRecord(number, OTP) {
         .catch(err => console.log(err));
 }
 
-async function registerUser(body) {
+async function registerUser(body,token) {
     return await new User({
         userNumber: body.userNumber,
         userLanguage: body.userLanguage

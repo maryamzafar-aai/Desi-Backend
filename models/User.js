@@ -8,12 +8,14 @@ const userSchema = new mongoose.Schema({
     userNumber: {
         type: Number
     },
-    userLanguage:{
+    userLanguage: {
         type: String
     },
     userOTP: {
         type: Number
     }
-});
+},
+    { timestamps: true }
+);
 let User = mongoose.model("User", userSchema);
 module.exports = User;
